@@ -68,6 +68,10 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
 .boton:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--malva-rosa);outline-offset:2px}
 .minis{display:grid;gap:8px}
 .cuando{margin:0;background:var(--fondo);border-radius:14px;padding:10px 14px;font-size:14px;font-weight:600;color:var(--malva-rosa)}
+.proximo{margin-top:22px;border:2px dashed var(--linea);border-radius:24px;padding:20px;text-align:center;display:grid;gap:4px}
+.proximo b{font:italic 400 28px/1.1 var(--f-display);color:var(--malva-rosa)}
+.proximo span{color:var(--gris);font-size:14.5px}
+.pasos{grid-template-columns:repeat(var(--n,4),1fr)}
 .ejemplos{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
 .ejemplos li{background:var(--rosa-palo);border-radius:20px;padding:6px 10px;font-size:13.5px;font-weight:600}
 .minis label{grid-template-columns:22px 1fr;align-items:center}
@@ -116,6 +120,8 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
   <label>Mi objetivo<textarea id="objetivo" name="objetivo"></textarea></label>
   <p class="ayuda">Este Mapa no sustituye a tu médico: la dosis y el tratamiento los decide él.</p>
 </div></section>
+
+<div id="proximo" class="proximo" hidden><b id="proximo-tit"></b><span id="proximo-txt"></span></div>
 
 <section id="lunes"><div class="tarjeta">
   <div class="cabeza"><h2>Mi <em>digestión</em></h2><span class="dia">Día 1</span></div>
@@ -310,6 +316,29 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
     try{ navigator.clipboard.writeText(t).then(hecho, fallo); }catch(e){ fallo(); }
   });
 
+  // Apertura por días: ?inicio=AAAA-MM-DD (fecha del Día 1). ?ver=todo lo enseña todo (para revisar).
+  var INICIO = "2026-11-17";
+  var q = {}; try{ location.search.replace(/^\?/,"").split("&").forEach(function(p){ var kv=p.split("="); if(kv[0]) q[decodeURIComponent(kv[0])]=decodeURIComponent(kv[1]||""); }); }catch(e){}
+  if (/^\d{4}-\d{2}-\d{2}$/.test(q.inicio||"")) INICIO = q.inicio;
+  function abrir(){
+    var p = INICIO.split("-"), ini = new Date(+p[0], +p[1]-1, +p[2]), hoy = new Date(); hoy.setHours(0,0,0,0);
+    var dia = q.ver === "todo" ? 3 : Math.floor((hoy - ini)/864e5) + 1; // 0 o menos = antes de empezar
+    var secs = [["lunes",1],["martes",2],["miercoles",3],["enviar",3]];
+    secs.forEach(function(x){ $(x[0]).hidden = dia < x[1]; });
+    var visibles = 0;
+    document.querySelectorAll(".pasos a").forEach(function(a){ var n = {datos:0,lunes:1,martes:2,miercoles:3}[a.dataset.paso]; a.hidden = dia < n; if(!a.hidden) visibles++; });
+    document.querySelector(".pasos").style.setProperty("--n", visibles);
+    if (dia < 3){
+      var sig = Math.max(dia,0) + 1, f = new Date(ini); f.setDate(ini.getDate() + sig - 1);
+      var DS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+      var cuando = (Math.round((f - hoy)/864e5) === 1) ? "mañana" : "el " + DS[f.getDay()] + " " + f.getDate();
+      var tema = {1:"tu digestión",2:"tu proteína",3:"tu fase"}[sig];
+      $("proximo-tit").textContent = "El Día " + sig + " se abre " + cuando;
+      $("proximo-txt").textContent = "Ese día se suma aquí una parte nueva: " + tema + ". Vuelve a este mismo enlace.";
+      $("proximo").hidden = false;
+    } else { $("proximo").hidden = true; }
+  }
+  abrir();
   cargar();
   diaSem = ["lun","mar","mie"].filter(function(d){ return !FILAS.some(function(f){ return estado.sem[f[0]+"_"+d]; }); })[0] || "mie";
   CAMPOS.forEach(function(id){ var el=$(id); if(el) el.value = estado.campos[id] || ""; });
