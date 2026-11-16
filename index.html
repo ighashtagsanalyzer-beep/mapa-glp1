@@ -67,6 +67,9 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
 .boton.sec{background:#fff;color:var(--noche);border:2px solid var(--linea)}
 .boton:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--malva-rosa);outline-offset:2px}
 .minis{display:grid;gap:8px}
+.cuando{margin:0;background:var(--fondo);border-radius:14px;padding:10px 14px;font-size:14px;font-weight:600;color:var(--malva-rosa)}
+.ejemplos{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.ejemplos li{background:var(--rosa-palo);border-radius:20px;padding:6px 10px;font-size:13.5px;font-weight:600}
 .minis label{grid-template-columns:22px 1fr;align-items:center}
 /* fases */
 .fases{display:grid;gap:8px}
@@ -127,6 +130,7 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
 
 <section id="martes"><div class="tarjeta">
   <div class="cabeza"><h2>Mi <em>proteína</em></h2><span class="dia">Día 2</span></div>
+  <p class="cuando">Esta parte la rellenas el Día 2, después del vídeo de Gabi.</p>
   <p class="ayuda">Pon tu peso y tu altura y te sale tu número de proteína al día.</p>
   <div class="dos">
     <label>Mi peso (kg)<input id="peso" name="peso" inputmode="decimal" placeholder="70"></label>
@@ -146,9 +150,11 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
     <label>Hoy comí (g)<input id="comi" name="comi" inputmode="numeric" placeholder="60"></label>
     <label>Me faltan (g)<input id="faltan" name="faltan" readonly tabindex="-1" placeholder="—"></label>
   </div>
-  <p class="ayuda">Suma lo que comiste con la infografía de los 15 minis.</p>
+  <p class="ayuda">Suma la proteína de lo que comiste hoy (tienes los gramos en la infografía de Gabi).</p>
   <div class="minis">
     <span style="font-weight:700">Mis 3 minis para mañana</span>
+    <p class="ayuda">Los minis son tomas pequeñas con mucha proteína, para cuando no te entra un plato entero. Elige 3 para mañana y te acercas a tu número. Por ejemplo:</p>
+    <ul class="ejemplos"><li>1 lata de atún · ~20 g</li><li>1 skyr · ~15 g</li><li>2 huevos · ~12 g</li><li>100 g de pavo · ~18 g</li><li>Queso fresco batido · ~16 g</li><li>100 g de edamame · ~11 g</li></ul>
     <label><span>1</span><input id="mini1" name="mini1"></label>
     <label><span>2</span><input id="mini2" name="mini2"></label>
     <label><span>3</span><input id="mini3" name="mini3"></label>
@@ -157,6 +163,7 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
 
 <section id="miercoles"><div class="tarjeta">
   <div class="cabeza"><h2>Mi <em>fase</em></h2><span class="dia">Día 3</span></div>
+  <p class="cuando">Esta parte la rellenas el Día 3, después del vídeo de Gabi.</p>
   <p class="ayuda">¿En qué fase estás? Marca una.</p>
   <div class="fases" role="group" aria-label="Mi fase">
     <button type="button" data-fase="Fase 1 · empezando o subiendo dosis">Fase 1 · Empezando o subiendo dosis<small>Que la digestión no te frene</small></button>
