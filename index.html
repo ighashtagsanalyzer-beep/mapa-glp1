@@ -96,14 +96,14 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
 <div class="envoltura">
 <nav aria-label="Partes del Mapa"><div class="pasos">
   <a href="#datos" data-paso="datos"><b>0</b>Datos</a>
-  <a href="#lunes" data-paso="lunes"><b>1</b>Lunes</a>
-  <a href="#martes" data-paso="martes"><b>2</b>Martes</a>
-  <a href="#miercoles" data-paso="miercoles"><b>3</b>Miérc.</a>
+  <a href="#lunes" data-paso="lunes"><b>1</b>Día 1</a>
+  <a href="#martes" data-paso="martes"><b>2</b>Día 2</a>
+  <a href="#miercoles" data-paso="miercoles"><b>3</b>Día 3</a>
 </div></nav>
 
 <form id="mapa" autocomplete="off" novalidate>
 <section id="datos"><div class="tarjeta">
-  <div class="cabeza"><h2>Mis <em>datos</em></h2><span class="dia">Domingo</span></div>
+  <div class="cabeza"><h2>Mis <em>datos</em></h2><span class="dia">Antes de empezar</span></div>
   <label>Mi nombre<input id="nombre" name="nombre"></label>
   <div class="dos">
     <label>Semana de tratamiento<input id="semana" name="semana" inputmode="numeric"></label>
@@ -115,10 +115,10 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
 </div></section>
 
 <section id="lunes"><div class="tarjeta">
-  <div class="cabeza"><h2>Mi <em>digestión</em></h2><span class="dia">Lunes · Día 1</span></div>
+  <div class="cabeza"><h2>Mi <em>digestión</em></h2><span class="dia">Día 1</span></div>
   <p class="ayuda">Tu semáforo: elige el día y marca cómo vas.</p>
   <div class="dias" role="group" aria-label="Día del semáforo">
-    <button type="button" data-dia="lun">Lunes</button><button type="button" data-dia="mar">Martes</button><button type="button" data-dia="mie">Miércoles</button>
+    <button type="button" data-dia="lun">Día 1</button><button type="button" data-dia="mar">Día 2</button><button type="button" data-dia="mie">Día 3</button>
   </div>
   <div id="semaforo" class="fila-sem" style="gap:14px"></div>
   <label>Mi síntoma nº1<input id="sintoma" name="sintoma"></label>
@@ -126,7 +126,7 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
 </div></section>
 
 <section id="martes"><div class="tarjeta">
-  <div class="cabeza"><h2>Mi <em>proteína</em></h2><span class="dia">Martes · Día 2</span></div>
+  <div class="cabeza"><h2>Mi <em>proteína</em></h2><span class="dia">Día 2</span></div>
   <p class="ayuda">Pon tu peso y tu altura y te sale tu número de proteína al día.</p>
   <div class="dos">
     <label>Mi peso (kg)<input id="peso" name="peso" inputmode="decimal" placeholder="70"></label>
@@ -156,7 +156,7 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
 </div></section>
 
 <section id="miercoles"><div class="tarjeta">
-  <div class="cabeza"><h2>Mi <em>fase</em></h2><span class="dia">Miércoles · Día 3</span></div>
+  <div class="cabeza"><h2>Mi <em>fase</em></h2><span class="dia">Día 3</span></div>
   <p class="ayuda">¿En qué fase estás? Marca una.</p>
   <div class="fases" role="group" aria-label="Mi fase">
     <button type="button" data-fase="Fase 1 · empezando o subiendo dosis">Fase 1 · Empezando o subiendo dosis<small>Que la digestión no te frene</small></button>
@@ -170,7 +170,7 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
 
 <section id="enviar"><div class="final">
   <h2>¿Quieres que Gabi revise <em>tu Mapa?</em></h2>
-  <p>Jueves y viernes hago valoraciones gratuitas. Mándame tu Mapa por WhatsApp y lo leo antes de la llamada.</p>
+  <p>Cuando termine el reto hago valoraciones gratuitas. Mándame tu Mapa por WhatsApp y lo leo antes de la llamada.</p>
   <a id="enviar-wa" class="boton" href="#" target="_blank" rel="noopener">Enviar mi Mapa a Gabi por WhatsApp</a>
   <button id="copiar" type="button" class="boton sec">Copiar mi Mapa</button>
   <p class="estado" id="estado" aria-live="polite"></p>
@@ -189,9 +189,9 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
   var CAMPOS = ["nombre","semana","pinchazo","medicamento","objetivo","sintoma","probar","peso","altura","numero-gabi","comi","mini1","mini2","mini3","preocupa","cambiarias"];
   var FILAS = [["tripa","Tripa"],["nauseas","Náuseas"],["energia","Energía"]];
   var NIVELES = [["v","Bien"],["a","Regular"],["r","Mal"]];
-  var DIAS = {lun:"Lunes",mar:"Martes",mie:"Miércoles"};
+  var DIAS = {lun:"Día 1",mar:"Día 2",mie:"Día 3"};
   var estado = {campos:{}, sem:{}, fase:""};
-  var diaSem = ({1:"lun",2:"mar",3:"mie"})[new Date().getDay()] || "lun";
+  var diaSem = "lun";
   var $ = function(id){return document.getElementById(id)};
 
   function cargar(){ try{ var s = JSON.parse(localStorage.getItem(CLAVE)); if(s && s.campos){ estado = s; estado.sem = s.sem||{}; } }catch(e){} }
@@ -268,19 +268,19 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
     L.push("Semana: "+v("semana")+" · Me pincho el: "+v("pinchazo"));
     L.push("Medicamento y dosis: "+v("medicamento"));
     L.push("Objetivo: "+v("objetivo"));
-    L.push(""); L.push("*Lunes · Mi digestión*");
+    L.push(""); L.push("*Día 1 · Mi digestión*");
     FILAS.forEach(function(f){
-      var partes = Object.keys(DIAS).map(function(d){ var x = estado.sem[f[0]+"_"+d]; var t = x ? ({v:"🟢",a:"🟡",r:"🔴"})[x] : "—"; return DIAS[d].slice(0,3)+" "+t; });
+      var partes = Object.keys(DIAS).map(function(d){ var x = estado.sem[f[0]+"_"+d]; var t = x ? ({v:"🟢",a:"🟡",r:"🔴"})[x] : "—"; return DIAS[d]+" "+t; });
       L.push(f[1]+": "+partes.join(" · "));
     });
     L.push("Síntoma nº1: "+v("sintoma"));
     L.push("Voy a probar: "+v("probar"));
-    L.push(""); L.push("*Martes · Mi proteína*");
+    L.push(""); L.push("*Día 2 · Mi proteína*");
     L.push("Peso: "+v("peso")+" kg · Altura: "+v("altura")+" cm");
     L.push("Mi número: "+(isFinite(p.numero) ? p.numero+" g al día" : "—")+(isFinite(p.imc) ? " (IMC "+p.imc.toFixed(1).replace(".",",")+")" : ""));
     L.push("Hoy comí: "+v("comi")+" g · Me faltan: "+($("faltan").value || "—")+" g");
     L.push("Mis minis: "+[v("mini1"),v("mini2"),v("mini3")].join(" / "));
-    L.push(""); L.push("*Miércoles · Mi fase*");
+    L.push(""); L.push("*Día 3 · Mi fase*");
     L.push("Fase: "+(estado.fase || "—"));
     L.push("Me preocupa: "+v("preocupa"));
     L.push("Cambiaría: "+v("cambiarias"));
@@ -304,6 +304,7 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
   });
 
   cargar();
+  diaSem = ["lun","mar","mie"].filter(function(d){ return !FILAS.some(function(f){ return estado.sem[f[0]+"_"+d]; }); })[0] || "mie";
   CAMPOS.forEach(function(id){ var el=$(id); if(el) el.value = estado.campos[id] || ""; });
   pintarSemaforo(); pintarFases(); progreso();
 })();
