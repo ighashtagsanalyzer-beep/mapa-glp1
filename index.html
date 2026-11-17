@@ -103,9 +103,9 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
 <div class="envoltura">
 <nav aria-label="Partes del Mapa"><div class="pasos">
   <a href="#datos" data-paso="datos"><b>0</b>Datos</a>
-  <a href="#lunes" data-paso="lunes"><b>1</b>Día 1</a>
-  <a href="#martes" data-paso="martes"><b>2</b>Día 2</a>
-  <a href="#miercoles" data-paso="miercoles"><b>3</b>Día 3</a>
+  <a href="#martes" data-paso="martes"><b>1</b>Día 1</a>
+  <a href="#miercoles" data-paso="miercoles"><b>2</b>Día 2</a>
+  <a href="#lunes" data-paso="lunes"><b>3</b>Día 3</a>
 </div></nav>
 
 <form id="mapa" autocomplete="off" novalidate>
@@ -123,20 +123,9 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
 
 <div id="proximo" class="proximo" hidden><b id="proximo-tit"></b><span id="proximo-txt"></span></div>
 
-<section id="lunes"><div class="tarjeta">
-  <div class="cabeza"><h2>Mi <em>digestión</em></h2><span class="dia">Día 1</span></div>
-  <p class="ayuda">Tu semáforo: elige el día y marca cómo vas.</p>
-  <div class="dias" role="group" aria-label="Día del semáforo">
-    <button type="button" data-dia="lun">Día 1</button><button type="button" data-dia="mar">Día 2</button><button type="button" data-dia="mie">Día 3</button>
-  </div>
-  <div id="semaforo" class="fila-sem" style="gap:14px"></div>
-  <label>Mi síntoma nº1<input id="sintoma" name="sintoma"></label>
-  <label>Lo que voy a probar esta semana<textarea id="probar" name="probar" placeholder="Por ejemplo: 2 kiwis al día y más agua"></textarea></label>
-</div></section>
-
 <section id="martes"><div class="tarjeta">
-  <div class="cabeza"><h2>Mi <em>proteína</em></h2><span class="dia">Día 2</span></div>
-  <p class="cuando">Esta parte la rellenas el Día 2, después del vídeo de Gabi.</p>
+  <div class="cabeza"><h2>Mi <em>proteína</em></h2><span class="dia">Día 1</span></div>
+  <p class="cuando">Esta parte la rellenas hoy, después del vídeo de Gabi.</p>
   <p class="ayuda">Pon tu peso y tu altura y te sale tu número de proteína al día.</p>
   <div class="dos">
     <label>Mi peso (kg)<input id="peso" name="peso" inputmode="decimal" placeholder="70"></label>
@@ -168,8 +157,8 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
 </div></section>
 
 <section id="miercoles"><div class="tarjeta">
-  <div class="cabeza"><h2>Mi <em>fase</em></h2><span class="dia">Día 3</span></div>
-  <p class="cuando">Esta parte la rellenas el Día 3, después del vídeo de Gabi.</p>
+  <div class="cabeza"><h2>Mi <em>fase</em></h2><span class="dia">Día 2</span></div>
+  <p class="cuando">Esta parte la rellenas el Día 2, después del vídeo de Gabi.</p>
   <p class="ayuda">¿En qué fase estás? Marca una.</p>
   <div class="fases" role="group" aria-label="Mi fase">
     <button type="button" data-fase="Fase 1 · empezando o subiendo dosis">Fase 1 · Empezando o subiendo dosis<small>Que la digestión no te frene</small></button>
@@ -179,6 +168,18 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
   </div>
   <label>Lo que más me preocupa<textarea id="preocupa" name="preocupa"></textarea></label>
   <label>¿Qué cambiarías tú en tu caso?<textarea id="cambiarias" name="cambiarias"></textarea></label>
+</div></section>
+
+<section id="lunes"><div class="tarjeta">
+  <div class="cabeza"><h2>Mi <em>digestión</em></h2><span class="dia">Día 3</span></div>
+  <p class="cuando">Esta parte la rellenas el Día 3, después del vídeo de Gabi.</p>
+  <p class="ayuda">Tu semáforo: elige el día y marca cómo vas.</p>
+  <div class="dias" role="group" aria-label="Día del semáforo">
+    <button type="button" data-dia="lun">Día 1</button><button type="button" data-dia="mar">Día 2</button><button type="button" data-dia="mie">Día 3</button>
+  </div>
+  <div id="semaforo" class="fila-sem" style="gap:14px"></div>
+  <label>Mi síntoma nº1<input id="sintoma" name="sintoma"></label>
+  <label>Lo que voy a probar esta semana<textarea id="probar" name="probar" placeholder="Por ejemplo: 2 kiwis al día y más agua"></textarea></label>
 </div></section>
 
 <section id="enviar"><div class="final">
@@ -281,22 +282,22 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
     L.push("Semana: "+v("semana")+" · Me pincho el: "+v("pinchazo"));
     L.push("Medicamento y dosis: "+v("medicamento"));
     L.push("Objetivo: "+v("objetivo"));
-    L.push(""); L.push("*Día 1 · Mi digestión*");
+    L.push(""); L.push("*Día 1 · Mi proteína*");
+    L.push("Peso: "+v("peso")+" kg · Altura: "+v("altura")+" cm");
+    L.push("Mi número: "+(isFinite(p.numero) ? p.numero+" g al día" : "—")+(isFinite(p.imc) ? " (IMC "+p.imc.toFixed(1).replace(".",",")+")" : ""));
+    L.push("Hoy comí: "+v("comi")+" g · Me faltan: "+($("faltan").value || "—")+" g");
+    L.push("Mis minis: "+[v("mini1"),v("mini2"),v("mini3")].join(" / "));
+    L.push(""); L.push("*Día 2 · Mi fase*");
+    L.push("Fase: "+(estado.fase || "—"));
+    L.push("Me preocupa: "+v("preocupa"));
+    L.push("Cambiaría: "+v("cambiarias"));
+    L.push(""); L.push("*Día 3 · Mi digestión*");
     FILAS.forEach(function(f){
       var partes = Object.keys(DIAS).map(function(d){ var x = estado.sem[f[0]+"_"+d]; var t = x ? ({v:"🟢",a:"🟡",r:"🔴"})[x] : "—"; return DIAS[d]+" "+t; });
       L.push(f[1]+": "+partes.join(" · "));
     });
     L.push("Síntoma nº1: "+v("sintoma"));
     L.push("Voy a probar: "+v("probar"));
-    L.push(""); L.push("*Día 2 · Mi proteína*");
-    L.push("Peso: "+v("peso")+" kg · Altura: "+v("altura")+" cm");
-    L.push("Mi número: "+(isFinite(p.numero) ? p.numero+" g al día" : "—")+(isFinite(p.imc) ? " (IMC "+p.imc.toFixed(1).replace(".",",")+")" : ""));
-    L.push("Hoy comí: "+v("comi")+" g · Me faltan: "+($("faltan").value || "—")+" g");
-    L.push("Mis minis: "+[v("mini1"),v("mini2"),v("mini3")].join(" / "));
-    L.push(""); L.push("*Día 3 · Mi fase*");
-    L.push("Fase: "+(estado.fase || "—"));
-    L.push("Me preocupa: "+v("preocupa"));
-    L.push("Cambiaría: "+v("cambiarias"));
     L.push(""); L.push("Quiero que revises mi Mapa en una valoración.");
     return L.join("\n");
   }
@@ -323,16 +324,16 @@ input:focus,textarea:focus{border-color:var(--malva-rosa);background:#fff}
   function abrir(){
     var p = INICIO.split("-"), ini = new Date(+p[0], +p[1]-1, +p[2]), hoy = new Date(); hoy.setHours(0,0,0,0);
     var dia = q.ver === "todo" ? 3 : Math.floor((hoy - ini)/864e5) + 1; // 0 o menos = antes de empezar
-    var secs = [["lunes",1],["martes",2],["miercoles",3],["enviar",3]];
+    var secs = [["martes",1],["miercoles",2],["lunes",3],["enviar",3]];
     secs.forEach(function(x){ $(x[0]).hidden = dia < x[1]; });
     var visibles = 0;
-    document.querySelectorAll(".pasos a").forEach(function(a){ var n = {datos:0,lunes:1,martes:2,miercoles:3}[a.dataset.paso]; a.hidden = dia < n; if(!a.hidden) visibles++; });
+    document.querySelectorAll(".pasos a").forEach(function(a){ var n = {datos:0,martes:1,miercoles:2,lunes:3}[a.dataset.paso]; a.hidden = dia < n; if(!a.hidden) visibles++; });
     document.querySelector(".pasos").style.setProperty("--n", visibles);
     if (dia < 3){
       var sig = Math.max(dia,0) + 1, f = new Date(ini); f.setDate(ini.getDate() + sig - 1);
       var DS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
       var cuando = (Math.round((f - hoy)/864e5) === 1) ? "mañana" : "el " + DS[f.getDay()] + " " + f.getDate();
-      var tema = {1:"tu digestión",2:"tu proteína",3:"tu fase"}[sig];
+      var tema = {1:"tu proteína",2:"tu fase",3:"tu digestión"}[sig];
       $("proximo-tit").textContent = "El Día " + sig + " se abre " + cuando;
       $("proximo-txt").textContent = "Ese día se suma aquí una parte nueva: " + tema + ". Vuelve a este mismo enlace.";
       $("proximo").hidden = false;
